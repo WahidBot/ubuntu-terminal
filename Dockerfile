@@ -1,15 +1,20 @@
-# Use a base image that supports systemd, for example, Ubuntu
+# Gunakan image dasar yang sesuai
 FROM ubuntu:20.04
 
-# Install necessary packages
-RUN apt-get update && \
-apt-get install -y shellinabox && \
-apt-get install -y systemd && \
-apt-get clean && \
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN echo 'root:root' | chpasswd
-# Expose the web-based terminal port
-EXPOSE 4200
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Start shellinabox
-CMD ["/usr/bin/shellinaboxd", "-t", "-s", "/:LOGIN"]
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y curl sudo && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install coder
+RUN curl -L https://coder.com/install.sh | sh
+
+# Expose port
+EXPOSE 3000
+
+# Start coder server
+CMD ["coder", "server"]
