@@ -1,20 +1,11 @@
-# Gunakan image dasar yang sesuai
-FROM ubuntu:20.04
+# Gunakan image gitpod/openvscode-server sebagai dasar
+FROM gitpod/openvscode-server
 
-# Set environment variables
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install dependencies
-RUN apt-get update && \
-    apt-get install -y curl sudo && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Install coder
-RUN curl -L https://coder.com/install.sh | sh
-
-# Expose port
+# Expose port 3000
 EXPOSE 3000
 
-# Start coder server
-CMD ["coder", "server"]
+# Set the working directory
+WORKDIR /home/workspace
+
+# The CMD instruction to start the server
+CMD ["openvscode-server"]
