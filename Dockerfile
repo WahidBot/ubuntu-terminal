@@ -1,5 +1,7 @@
-# Gunakan image dasar Python
+# Gunakan image dasar
 FROM python:3.10
+FROM node:latest
+FROM ubuntu:20.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
